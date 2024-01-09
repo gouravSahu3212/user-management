@@ -49,6 +49,13 @@
                                 </li>
                             @endif
                         @else
+
+                            @if (Route::has('users'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('users') }}">{{ __('Users') }}</a>
+                                </li>
+                            @endif
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <img src="{{ asset('storage/'.Auth::user()->profile_path) }}" alt="Profile Photo" width="30" height="24">

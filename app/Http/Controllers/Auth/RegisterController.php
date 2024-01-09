@@ -80,7 +80,7 @@ class RegisterController extends Controller
             'state' => $data['state'],
             'city' => $data['city'],
             'zip' => $data['zip'],
-            'profile_path' => $data['profile_photo']->store('profile-photos', 'public'), // Adjust the storage path as needed
+            'profile_path' => $data['profile_photo']->store('profile-photos', 'public'),
             'interest' => implode(',,', $data['interest']),
         ]);
     }

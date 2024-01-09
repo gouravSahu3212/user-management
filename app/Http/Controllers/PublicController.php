@@ -16,7 +16,7 @@ class PublicController extends Controller
      */
     public function get_countries()
     {
-        return Country::all();
+        return Country::orderBy('name')->get();
     }
 
     /**
@@ -29,7 +29,7 @@ class PublicController extends Controller
         $request->validate([
             'country_id' => 'required',
         ]);
-        return State::where('country_id', $request->country_id)->get();
+        return State::where('country_id', $request->country_id)->orderBy('name')->get();
     }
 
     
