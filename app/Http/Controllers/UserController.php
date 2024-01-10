@@ -12,6 +12,16 @@ use Auth;
 class UserController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Return all Users.
      *
      * @return \Illuminate\Contracts\Support\Renderable
@@ -19,7 +29,7 @@ class UserController extends Controller
     public function get_users()
     {
         $users = User::whereNot('id', Auth::user()->id)->orderBy('id')->paginate(15);
-        return view('users')->with('users', $users);
+        return view('user.users')->with('users', $users);
     }
 
     /**
@@ -71,11 +81,13 @@ class UserController extends Controller
     /**
      * Opens a delete user form.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return \Illuminate\Http\RedirectResponse
      */
-    function delete_user_form($user_id) {
-        $user = User::findOrFail($user_id);
-        return view('user.delete_user')->with('user', $user);
+    function delete_user(Request $request) {
+        $request->validate(['user_id' => ['required']]);
+        $user = User::findOrFail($request->user_id);
+        $user->delete();
+        return redirect()->back()->with('status', 'User deleted successfully.');
     }
 
     /**

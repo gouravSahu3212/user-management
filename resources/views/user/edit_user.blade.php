@@ -87,6 +87,7 @@
                             <label for="city" class="col-md-4 col-form-label text-md-end">{{ __('City') }}</label>
 
                             <div class="col-md-6">
+                                <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}" required autocomplete="city">
                                 <select id="city" class="form-select @error('city') is-invalid @enderror" name="city" aria-label="City" required>
                                     @forEach($cities as $city)
                                         <option value="{{$city->id}}" @if($city->id==$user->city) selected @endif>{{$city->name}}</option>
@@ -205,7 +206,7 @@
         });
     }
 
-    function getCities(state_id) {
+    /*function getCities(state_id) {
         axios({
             method: 'get',
             url: "{{route('get-cities')}}",
@@ -218,7 +219,7 @@
                 city_select.innerHTML += `<option value="${city.id}" >${city.name}</option>`;
             });
         });
-    }
+    } */
     
     country_select.addEventListener("change", ()=> {
         city_select.innerHTML = "";
@@ -230,10 +231,10 @@
         }
     });
     
-    state_select.addEventListener("change", ()=> {
+    /* state_select.addEventListener("change", ()=> {
         state_id = state_select.value;
         getCities(state_id);
-    });
+    }); */
 
     profile_input.addEventListener("change", () => {
         const [file] = profile_input.files

@@ -3,7 +3,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Models\Country;
+use App\Models\State;
+use App\Models\City;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -17,12 +21,22 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $country = Country::inRandomOrder()->first();
+        $state = State::where('country_id', $country->id)->inRandomOrder()->first();
+
         return [
-            'name' => fake()->name(),
+            'fname' => fake()->firstName(),
+            'lname' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => '$2y$10$NQNvt1CF8QMJ.AO7X..rW.uiA8.CwFPw8ZrBW0L5MqCGHYsrNIPS2', // 123@User
             'remember_token' => Str::random(10),
+            'country' => $country->id,
+            'state' => $state->id,
+            'city' => fake()->city(),
+            'zip' => fake()->postcode(),
+            'profile_path' => 'profile-photos/profile_photo_default.jpg',
+            'interest' => implode(',,', $this->getInterests()),
         ];
     }
 
@@ -36,5 +50,20 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    /**
+     * Simulate photo upload and store file paths in the database.
+     *
+     * @return array
+     */
+    public function getInterests()
+    {
+        $interests = ['reading', 'writing', 'traveling', 'playing'];
+
+        // Shuffle the array
+        shuffle($interests);
+
+        return array_slice($interests, 0, 2);
     }
 }
