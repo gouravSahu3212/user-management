@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\State;
-use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
 
@@ -79,7 +80,7 @@ class UserController extends Controller
     }
 
     /**
-     * Opens a delete user form.
+     * Deletes the user from database.
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -98,5 +99,21 @@ class UserController extends Controller
     function reset_password_form($user_id) {
         $user = User::findOrFail($user_id);
         return view('user.reset_password')->with('user', $user);
+    }
+
+    /**
+     * Deletes the user from database.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    function reset_password(Request $request) {
+        $request->validate([
+            'user_id' => ['required'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+        $user = User::findOrFail($request->user_id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->route('users')->with('status', 'Password update successfully.');
     }
 }

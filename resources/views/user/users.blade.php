@@ -17,9 +17,9 @@
                     <div class="card-body">
                         <h5 class="card-title">{{$user->fname}} {{$user->lname}}</h5>
                         <p class="card-text">{{$user->email}}</p>
-                        <a href="{{ route('edit-user-form', ['user_id' => $user->id]) }}" class="btn btn-warning">Edit</a>
-                        <button type="button" class="btn btn-danger dltUsrBtn" onclick="deleteUser(this);" data-user-id="{{$user->id}}" data-user-fname="{{$user->fname}}" data-user-lname="{{$user->lname}}">Delete</button>
-                        <a href="{{ route('reset-password-form', ['user_id' => $user->id]) }}" class="btn btn-secondary">Reset</a>
+                        <a href="{{ route('edit-user-form', ['user_id' => $user->id]) }}" class="btn btn-warning" title="Edit user">Edit</a>
+                        <button type="button" class="btn btn-danger dltUsrBtn" onclick="deleteUser(this);" data-user-id="{{$user->id}}" data-user-fname="{{$user->fname}}" data-user-lname="{{$user->lname}}" title="Delete user">Delete</button>
+                        <a href="{{ route('reset-password-form', ['user_id' => $user->id]) }}" class="btn btn-secondary" title="Reset password">Reset</a>
                         <form method="post" action="{{ route('delete-user') }}" id="deleteUser{{$user->id}}">
                             @csrf
                             <input type="hidden" name="user_id" value="{{$user->id}}">

@@ -36,3 +36,5 @@ Route::post('/edit-user/{user_id}', [App\Http\Controllers\UserController::class,
 Route::post('/delete-user', [App\Http\Controllers\UserController::class, 'delete_user'])->name('delete-user');
 
 Route::get('/reset-password-form/{user_id}', [App\Http\Controllers\UserController::class, 'reset_password_form'])->name('reset-password-form');
+
+Route::post('/reset-password', [App\Http\Controllers\UserController::class, 'reset_password'])->name('update-password');
