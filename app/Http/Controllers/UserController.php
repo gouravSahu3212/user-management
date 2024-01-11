@@ -102,7 +102,7 @@ class UserController extends Controller
     }
 
     /**
-     * Deletes the user from database.
+     * Resets the password of a user.
      *
      * @return \Illuminate\Http\RedirectResponse
      */

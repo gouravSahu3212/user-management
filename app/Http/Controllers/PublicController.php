@@ -24,12 +24,9 @@ class PublicController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function get_states(Request $request)
+    public function get_states(int $country_id)
     {
-        $request->validate([
-            'country_id' => 'required',
-        ]);
-        return State::where('country_id', $request->country_id)->orderBy('name')->get();
+        return State::where('country_id', $country_id)->orderBy('name')->get();
     }
 
     
@@ -39,11 +36,8 @@ class PublicController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function get_cities(Request $request)
+    /* public function get_cities(int $state_id)
     {
-        $request->validate([
-            'state_id' => 'required',
-        ]);
-        return City::where('state_id', $request->state_id)->get();
-    }
+        return City::where('state_id', $state_id)->get();
+    } */
 }

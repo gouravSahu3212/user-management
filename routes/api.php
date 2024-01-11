@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\UserCollection;
 use App\Models\User;
 
 /*
@@ -15,12 +16,24 @@ use App\Models\User;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+Route::middleware('api.auth')->group(function () {
+    Route::get('/users', [App\Http\Controllers\Api\UserController::class, 'users_list']);
     
-    Route::get('/user/{id}', function (string $id) {
-        return new UserResource(User::findOrFail($id));
-    });
+    Route::get('/user', [App\Http\Controllers\Api\AuthController::class, 'user']);
+
+    Route::get('/user/{id}', [App\Http\Controllers\Api\UserController::class, 'get_user']);
+
+    Route::post('/user/{id}', [App\Http\Controllers\Api\UserController::class, 'update_user']);
+
+    Route::delete('/user/{id}', [App\Http\Controllers\Api\UserController::class, 'delete_user']);
+    
+    Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout']);
 });
+
+Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
+
+Route::post('/register', [App\Http\Controllers\Api\AuthController::class, 'register']);
+
+Route::post('/forget-password', [App\Http\Controllers\Api\AuthController::class, 'forget_password']);
+
+Route::post('/reset-password', [App\Http\Controllers\Api\AuthController::class, 'reset_password']);

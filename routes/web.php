@@ -23,7 +23,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/get-countries', [App\Http\Controllers\PublicController::class, 'get_countries'])->name('get-countries');
 
-Route::get('/get-states', [App\Http\Controllers\PublicController::class, 'get_states'])->name('get-states');
+Route::get('/get-states/{country_id}', [App\Http\Controllers\PublicController::class, 'get_states'])->name('get-states');
 
 Route::get('/get-cities', [App\Http\Controllers\PublicController::class, 'get_cities'])->name('get-cities');
 

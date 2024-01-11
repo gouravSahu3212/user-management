@@ -88,11 +88,6 @@
 
                             <div class="col-md-6">
                                 <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}" required autocomplete="city">
-                                <select id="city" class="form-select @error('city') is-invalid @enderror" name="city" aria-label="City" required>
-                                    @forEach($cities as $city)
-                                        <option value="{{$city->id}}" @if($city->id==$user->city) selected @endif>{{$city->name}}</option>
-                                    @endforeach
-                                </select>
 
                                 @error('city')
                                     <span class="invalid-feedback" role="alert">
